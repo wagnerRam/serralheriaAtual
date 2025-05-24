@@ -9,7 +9,7 @@ export function Toast({ message, onClose }: ToastProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 3000); // some após 3 segundos
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [onClose]);
@@ -20,7 +20,7 @@ export function Toast({ message, onClose }: ToastProps) {
         position: "fixed",
         top: 20,
         right: 20,
-        backgroundColor: "#22c55e", // verde sucesso
+        backgroundColor: "#22c55e",
         color: "white",
         padding: "12px 20px",
         borderRadius: "8px",

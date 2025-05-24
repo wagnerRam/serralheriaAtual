@@ -54,7 +54,7 @@ export function Contato() {
           />
         </div>
 
-        {/* Formulário */}
+
         <div className="w-full lg:w-1/2 max-w-xl">
           <p className="font-semibold text-sm mb-1">⚡ ENTRE EM CONTATO</p>
           <h2 className="text-2xl font-bold mb-6 text-red-500">

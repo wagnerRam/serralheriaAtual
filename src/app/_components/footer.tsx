@@ -5,7 +5,7 @@ export function Footer() {
     <footer className="bg-zinc-900 py-12 px-6 md:px-20">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between gap-10">
         
-        {/* Informações */}
+
         <div className="flex-1">
           <p className="text-sm text-gray-700 font-medium mb-2">Serralheria Atual</p>
           <h2 className=" text-red-500 text-3xl font-bold border-l-4 border-red-600 pl-2 mb-8">Nossos meios de contato</h2>
@@ -45,7 +45,7 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Redes sociais */}
+
           <div className="mt-10 text-white">
             <p className="font-semibold mb-2">Nos siga nas redes sociais!</p>
             <div className="flex gap-4 text-2xl text-gray-700">
@@ -59,7 +59,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Mapa */}
+
         <div className="flex-1">
           <iframe
             title="Mapa Real Portões"

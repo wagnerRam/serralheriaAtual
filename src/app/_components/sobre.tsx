@@ -6,10 +6,10 @@ import image1 from "../../../public/serralheiro.jpg"
 export function Sobre() {
   return (
     <main className="min-h-screen grid grid-cols-1 md:grid-cols-2 mb-30">
-      {/* Imagem do portão */}
+
       <div className="relative h-80 md:h-auto" id="sobre">
         <Image
-          src={image1} // Substitua com o caminho correto da imagem
+          src={image1}
           alt="Portão Automático"
           layout="fill"
           objectFit="cover"
@@ -17,7 +17,7 @@ export function Sobre() {
         />
       </div>
 
-      {/* Conteúdo textual */}
+
       <div className="bg-zinc-900 text-white flex flex-col justify-center p-8 md:p-16">
         <h2 className="text-sm text-zinc-400 mb-1">Sobre </h2>
         <h1 className="text-3xl md:text-4xl font-bold text-red-500 mb-4" >
@@ -25,17 +25,18 @@ export function Sobre() {
         </h1>
 
         <p className="mb-4">
-          Localizada na região do Grande ABC, a empresa se orgulha de ser o parceiro de confiança de seus clientes, priorizando excelência em cada projeto.
+          A serralheria teve origem em um ferro-velho, onde eram realizados pequenos serviços no bairro e na cidade. 
+          Com o passar do tempo, a qualidade dos serviços prestados gerou um aumento significativo da demanda, impulsionado por recomendações dos próprios clientes. 
+          Essa expansão evidenciou a necessidade de um espaço maior para atender aos pedidos. 
+          Assim, em 2001, foi fundada a Serralheria Atual no bairro Vila Nova Cachoeirinha, em São Paulo, especializada na fabricação de portões, grades, estruturas metálicas e artefatos de ferro.
         </p>
+
 
         <p className="mb-4">
-          Nossa equipe altamente qualificada está comprometida em entender as necessidades específicas de cada cliente, entregando portões robustos, 
-          funcionais e esteticamente agradáveis. Na Real Portões Automáticos, você encontra inovação, segurança e atendimento personalizado, sempre 
-          focando na satisfação e tranquilidade de quem confia em nossos produtos.
-        </p>
-
-        <p className="mb-6">
-          Escolha a Real Portões Automáticos e garanta um portão que combina tecnologia avançada, durabilidade e design elegante.
+          A Serralheria Atual nasceu com o compromisso de oferecer soluções personalizadas e de alta qualidade para seus clientes. 
+          A empresa se destaca pela dedicação em compreender as necessidades específicas de cada projeto. 
+          Especializada na produção de portões robustos, funcionais e esteticamente agradáveis, a Serralheria Atual combina inovação, segurança e 
+          atendimento personalizado, garantindo a satisfação e a tranquilidade de seus clientes.
         </p>
 
         <Link
