@@ -1,6 +1,5 @@
 import Image, { StaticImageData } from "next/image";
 
-// Tipagem para as categorias
 interface Galeria {
   id: number;
   titulo: string;
@@ -8,7 +7,7 @@ interface Galeria {
   href?: string;
 }
 
-// Mock de dados – substitua pelos seus dados reais ou consumo de API
+
 import portaoTubularImg from "../../../public/sobre1IMG.png";
 import portaoChapaImg from "../../../public/sobre2IMG.png";
 import escada from "../../../public/escada de metal.webp"
