@@ -55,7 +55,7 @@ const categorias: Galeria[] = [
     imagem: estruturaTeto,
   },
     {
-    id: 7,
+    id: 8,
     titulo: "imagem 7",
     imagem: portaoAberto,
   }

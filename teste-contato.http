@@ -1,0 +1,9 @@
+POST http://localhost:3000/api/contato
+Contente-type: application/json
+
+{
+    "nome": "wagner carvalho",
+    "telefone": "9999999999",
+    "email": "wagner@email.com",
+    "mensagem": "Quero um orçamento de portão."
+}
