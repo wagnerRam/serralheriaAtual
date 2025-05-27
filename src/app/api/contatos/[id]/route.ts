@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
+// GET
 export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
+  req: Request,
+  context: { params: { id: string } }
 ) {
-  const id = params.id;
+  const id = context.params.id;
 
   try {
     const [rows] = await db.query("SELECT * FROM contatos WHERE id = ?", [id]);
@@ -21,11 +22,12 @@ export async function GET(
   }
 }
 
+// DELETE
 export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
+  req: Request,
+  context: { params: { id: string } }
 ) {
-  const id = params.id;
+  const id = context.params.id;
 
   try {
     const [result] = await db.query("DELETE FROM contatos WHERE id = ?", [id]);
