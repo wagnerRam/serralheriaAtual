@@ -1,16 +1,13 @@
-import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-// GET /api/contatos/[id]
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const id = params.id;
+interface Params {
+  id: string;
+}
 
+export async function GET({ params }: { params: Params }) {
   try {
-    const [rows] = await db.query("SELECT * FROM contatos WHERE id = ?", [id]);
+    const [rows] = await db.query("SELECT * FROM contatos WHERE id = ?", [params.id]);
 
     if ((rows as any[]).length === 0) {
       return NextResponse.json({ error: "Contato não encontrado." }, { status: 404 });
@@ -19,19 +16,13 @@ export async function GET(
     return NextResponse.json((rows as any[])[0]);
   } catch (error) {
     console.error("Erro ao buscar contato:", error);
-    return NextResponse.json({ error: "Erro interno ao buscar contato." }, { status: 500 });
+    return NextResponse.json({ error: "Erro interno." }, { status: 500 });
   }
 }
 
-// DELETE /api/contatos/[id]
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const id = params.id;
-
+export async function DELETE({ params }: { params: Params }) {
   try {
-    const [result] = await db.query("DELETE FROM contatos WHERE id = ?", [id]);
+    const [result] = await db.query("DELETE FROM contatos WHERE id = ?", [params.id]);
 
     if ((result as any).affectedRows === 0) {
       return NextResponse.json({ error: "Contato não encontrado." }, { status: 404 });
@@ -40,6 +31,6 @@ export async function DELETE(
     return NextResponse.json({ message: "Contato deletado com sucesso." });
   } catch (error) {
     console.error("Erro ao deletar contato:", error);
-    return NextResponse.json({ error: "Erro interno ao deletar contato." }, { status: 500 });
+    return NextResponse.json({ error: "Erro interno." }, { status: 500 });
   }
 }
