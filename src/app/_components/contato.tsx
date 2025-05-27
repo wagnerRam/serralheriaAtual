@@ -33,7 +33,7 @@ export function Contato() {
         setEmail("");
         setMensagem("");
       } else {
-        setStatus("Erro ao enviar: " + data.error || "tente novamente.");
+        setStatus("Erro ao enviar: " + (data.error || "tente novamente."));
       }
     } catch (err) {
       setStatus("Erro ao enviar o formulário.");
@@ -53,7 +53,6 @@ export function Contato() {
             priority
           />
         </div>
-
 
         <div className="w-full lg:w-1/2 max-w-xl">
           <p className="font-semibold text-sm mb-1">⚡ ENTRE EM CONTATO</p>
