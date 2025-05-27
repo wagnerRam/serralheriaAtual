@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-// GET - Buscar um contato pelo ID
+// GET /api/contatos/[id]
 export async function GET(
-  _req: NextRequest,
+  req: NextRequest,
   context: { params: { id: string } }
 ) {
-  const id = context.params.id;
+  const { id } = context.params;
 
   try {
     const [rows] = await db.query("SELECT * FROM contatos WHERE id = ?", [id]);
@@ -22,12 +22,12 @@ export async function GET(
   }
 }
 
-// DELETE - Deletar um contato pelo ID
+// DELETE /api/contatos/[id]
 export async function DELETE(
-  _req: NextRequest,
+  req: NextRequest,
   context: { params: { id: string } }
 ) {
-  const id = context.params.id;
+  const { id } = context.params;
 
   try {
     const [result] = await db.query("DELETE FROM contatos WHERE id = ?", [id]);
