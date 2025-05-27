@@ -5,7 +5,7 @@ interface Params {
   id: string;
 }
 
-export async function GET({ params }: { params: Params }) {
+export async function GET(request: Request, { params }: { params: Params }) {
   try {
     const [rows] = await db.query("SELECT * FROM contatos WHERE id = ?", [params.id]);
 
@@ -20,7 +20,7 @@ export async function GET({ params }: { params: Params }) {
   }
 }
 
-export async function DELETE({ params }: { params: Params }) {
+export async function DELETE(request: Request, { params }: { params: Params }) {
   try {
     const [result] = await db.query("DELETE FROM contatos WHERE id = ?", [params.id]);
 
