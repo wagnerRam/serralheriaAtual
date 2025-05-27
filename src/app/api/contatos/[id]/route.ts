@@ -42,3 +42,4 @@ export async function DELETE(
     return NextResponse.json({ error: "Erro interno." }, { status: 500 });
   }
 }
+//
