@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-// GET
-export async function GET(
-  req: Request,
-  context: { params: { id: string } }
-) {
+export async function GET(request: Request, context: any) {
   const id = context.params.id;
 
   try {
@@ -22,11 +18,7 @@ export async function GET(
   }
 }
 
-// DELETE
-export async function DELETE(
-  req: Request,
-  context: { params: { id: string } }
-) {
+export async function DELETE(request: Request, context: any) {
   const id = context.params.id;
 
   try {
@@ -42,4 +34,3 @@ export async function DELETE(
     return NextResponse.json({ error: "Erro interno." }, { status: 500 });
   }
 }
-//
