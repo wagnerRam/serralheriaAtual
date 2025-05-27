@@ -1,8 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import type { NextApiRequest } from "next"; // não é obrigatório, só se usar APIs antigas
 
-export async function GET(request: Request, context: { params: { id: string } }) {
-  const id = context.params.id;
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+  const id = params.id;
 
   try {
     const [rows] = await db.query("SELECT * FROM contatos WHERE id = ?", [id]);
@@ -18,8 +19,8 @@ export async function GET(request: Request, context: { params: { id: string } })
   }
 }
 
-export async function DELETE(request: Request, context: { params: { id: string } }) {
-  const id = context.params.id;
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+  const id = params.id;
 
   try {
     const [result] = await db.query("DELETE FROM contatos WHERE id = ?", [id]);
