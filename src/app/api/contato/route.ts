@@ -5,8 +5,8 @@ export async function POST(req: Request) {
   const body = await req.json();
   const { nome, telefone, email, mensagem } = body;
 
-  // Loga no terminal os dados recebidos
-  console.log("📬 Novo contato recebido:", {
+
+  console.log(" Novo contato recebido:", {
     nome,
     telefone,
     email,
