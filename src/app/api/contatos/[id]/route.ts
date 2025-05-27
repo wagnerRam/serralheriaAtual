@@ -4,9 +4,9 @@ import { db } from "@/lib/db";
 // GET /api/contatos/[id]
 export async function GET(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = context.params;
+  const id = params.id;
 
   try {
     const [rows] = await db.query("SELECT * FROM contatos WHERE id = ?", [id]);
@@ -25,9 +25,9 @@ export async function GET(
 // DELETE /api/contatos/[id]
 export async function DELETE(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = context.params;
+  const id = params.id;
 
   try {
     const [result] = await db.query("DELETE FROM contatos WHERE id = ?", [id]);
