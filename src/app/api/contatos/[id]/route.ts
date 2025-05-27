@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-interface Params {
-  id: string;
-}
+export async function GET(request: Request, context: { params: { id: string } }) {
+  const id = context.params.id;
 
-export async function GET(request: Request, { params }: { params: Params }) {
   try {
-    const [rows] = await db.query("SELECT * FROM contatos WHERE id = ?", [params.id]);
+    const [rows] = await db.query("SELECT * FROM contatos WHERE id = ?", [id]);
 
     if ((rows as any[]).length === 0) {
       return NextResponse.json({ error: "Contato não encontrado." }, { status: 404 });
@@ -20,9 +18,11 @@ export async function GET(request: Request, { params }: { params: Params }) {
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: Params }) {
+export async function DELETE(request: Request, context: { params: { id: string } }) {
+  const id = context.params.id;
+
   try {
-    const [result] = await db.query("DELETE FROM contatos WHERE id = ?", [params.id]);
+    const [result] = await db.query("DELETE FROM contatos WHERE id = ?", [id]);
 
     if ((result as any).affectedRows === 0) {
       return NextResponse.json({ error: "Contato não encontrado." }, { status: 404 });
