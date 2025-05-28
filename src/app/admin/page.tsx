@@ -20,7 +20,7 @@ export default function AdminPanel() {
 useEffect(() => {
   async function fetchOrcamentos() {
     try {
-      const res = await fetch("https://serralheria-backend.vercel.app/api/contatos", {
+      const res = await fetch("https://serralheria-backend.vercel.app/", {
         cache: "no-store",
       });
 
