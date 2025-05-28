@@ -16,39 +16,39 @@ export default function AdminPanel() {
   const [mensagemAbertaId, setMensagemAbertaId] = useState<number | null>(null);
   const [menuAtivo, setMenuAtivo] = useState<"orcamentos">("orcamentos");
 
-// url backend
-useEffect(() => {
-  async function fetchOrcamentos() {
-    try {
-      const res = await fetch("https://serralheria-backend.vercel.app/", {
-        cache: "no-store",
-      });
+  // ✅ URL do backend corrigida
+  useEffect(() => {
+    async function fetchOrcamentos() {
+      try {
+        const res = await fetch("https://serralheria-backend.vercel.app/api/contatos", {
+          cache: "no-store",
+        });
 
-      if (!res.ok) {
-        throw new Error("Erro ao buscar contatos");
-      }
+        if (!res.ok) {
+          throw new Error("Erro ao buscar contatos");
+        }
 
-      const data = await res.json();
+        const data = await res.json();
 
-      if (Array.isArray(data)) {
-        setOrcamentos(data);
-      } else {
+        if (Array.isArray(data)) {
+          setOrcamentos(data);
+        } else {
+          setOrcamentos([]);
+        }
+      } catch (error) {
+        console.error("Erro no fetch:", error);
         setOrcamentos([]);
       }
-    } catch (error) {
-      console.error("Erro no fetch:", error);
-      setOrcamentos([]);
     }
-  }
 
-  fetchOrcamentos();
-}, []);
+    fetchOrcamentos();
+  }, []);
 
   async function handleDelete(id: number) {
     if (!confirm("Tem certeza que deseja deletar este orçamento?")) return;
 
     try {
-      const res = await fetch(`/api/contatos/${id}`, {  // ALTERADO AQUI
+      const res = await fetch(`/api/contatos/${id}`, {
         method: "DELETE",
       });
 
