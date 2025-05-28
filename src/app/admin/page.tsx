@@ -16,9 +16,18 @@ export default function AdminPanel() {
   const [mensagemAbertaId, setMensagemAbertaId] = useState<number | null>(null);
   const [menuAtivo, setMenuAtivo] = useState<"orcamentos">("orcamentos");
 
-  useEffect(() => {
-    async function fetchOrcamentos() {
-      const res = await fetch("/api/contatos", { cache: "no-store" }); // ALTERADO AQUI
+// url backend
+useEffect(() => {
+  async function fetchOrcamentos() {
+    try {
+      const res = await fetch("https://serralheria-backend.vercel.app/api/contatos", {
+        cache: "no-store",
+      });
+
+      if (!res.ok) {
+        throw new Error("Erro ao buscar contatos");
+      }
+
       const data = await res.json();
 
       if (Array.isArray(data)) {
@@ -26,9 +35,14 @@ export default function AdminPanel() {
       } else {
         setOrcamentos([]);
       }
+    } catch (error) {
+      console.error("Erro no fetch:", error);
+      setOrcamentos([]);
     }
-    fetchOrcamentos();
-  }, []);
+  }
+
+  fetchOrcamentos();
+}, []);
 
   async function handleDelete(id: number) {
     if (!confirm("Tem certeza que deseja deletar este orçamento?")) return;
