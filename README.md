@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Serralheria Atual - Painel Admin
 
-## Getting Started
+Este é um sistema de gerenciamento para a **Serralheria Atual**, desenvolvido em **Next.js + TypeScript**.  
+O projeto tem como objetivo centralizar e facilitar a gestão de orçamentos e clientes através de um **painel administrativo moderno**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tecnologias Utilizadas
+- [Next.js](https://nextjs.org/) (React Framework)
+- [TypeScript](https://www.typescriptlang.org/)
+- [TailwindCSS](https://tailwindcss.com/) (estilização)
+- [Shadcn/UI](https://ui.shadcn.com/) (componentes prontos)
+- [Lucide Icons](https://lucide.dev/) (ícones)
+- [PostCSS](https://postcss.org/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Pré-requisitos
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Antes de rodar o projeto, você precisa ter instalado:
+- [Node.js](https://nodejs.org/) (versão 18 ou superior recomendada)
+- [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Como Rodar o Projeto Localmente
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/wagnerRam/serralheriaAtual.git
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Acesse a pasta do projeto:
+   ```bash
+   cd serralheriaAtual
 
-## Deploy on Vercel
+3. Instale as Dependências:
+   ```bash
+   npm install
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Abra no navegador http://localhost:3000
+   ```bash
+   http://localhost:3000
+
+
+
+
