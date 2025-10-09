@@ -5,7 +5,7 @@ import image1 from "../../../public/serralheiro.jpg"
 
 export function Sobre() {
   return (
-    <main className="min-h-screen grid grid-cols-1 md:grid-cols-2 mb-30">
+    <main className="grid grid-cols-1 md:grid-cols-2 mb-10 md:mb-20">
 
       <div className="relative h-80 md:h-auto" id="sobre">
         <Image
@@ -46,7 +46,6 @@ export function Sobre() {
           Saiba mais
         </Link>
       </div>
-      <div></div>
     </main>
   );
 }

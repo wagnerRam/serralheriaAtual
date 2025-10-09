@@ -22,7 +22,7 @@ export function Hero() {
     }
     
     return (
-        <div className="mb-30">
+        <div className="mb-10 md:mb-20">
             <Slider {...settings}>
                 <div className="relative">
                     <Image 

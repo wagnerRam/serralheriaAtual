@@ -20,27 +20,27 @@ import portaoAberto from "../../../public/portaoAberto.webp"
 const categorias: Galeria[] = [
   {
     id: 1,
-    titulo: "Portão com Chapa de Aço",
+    titulo: "Imagem 1",
     imagem: portaoTubularImg,
   },
   {
     id: 2,
-    titulo: "Estrutura em Aço",
+    titulo: "Imagem 2",
     imagem: portaoChapaImg,
   },
   {
     id: 3,
-    titulo: "Escada em Metal",
+    titulo: "Imagem 3",
     imagem: escada,
   },
   {
     id: 4,
-    titulo: "Portão com Detalhes em Madeira",
+    titulo: "Imagem 4",
     imagem: portao,
   },
   {
     id: 5,
-    titulo: "Portão Automatico",
+    titulo: "Imagem 5",
     imagem: portaoAutomatico,
   },
   {
@@ -62,7 +62,7 @@ const categorias: Galeria[] = [
 
 export function Categorias() {
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="galeria">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 mb-10 md:mb-20" id="galeria">
       <h2 className="text-3xl font-bold text-center mb-10 text-red-500" >Galeria</h2>
 
       <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

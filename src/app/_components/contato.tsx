@@ -42,7 +42,7 @@ export function Contato() {
   };
 
   return (
-    <section className="bg-white text-gray-800 py-16 px-4 pt-0" id="contato">
+    <section className="bg-white text-gray-800 py-10 md:py-16 px-4" id="contato">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16">
         {/* Imagem */}
         <div className="w-full lg:w-1/2">
