@@ -26,7 +26,7 @@ const categorias: Galeria[] = [
   },
   {
     id: 2,
-    titulo: "Portão de Chapa",
+    titulo: "Estrutura de Aço",
     imagem: portaoChapaImg,
   },
   {
