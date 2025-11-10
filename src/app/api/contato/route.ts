@@ -1,36 +1,29 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { getConnection } from "@/lib/db";
 
 export async function POST(request: Request) {
-    let dados;
-    try {
-        dados = await request.json();
-    } catch (e) {
-        return NextResponse.json({ message: "Requisição JSON inválida" }, { status: 400 });
-    }
+  const dados = await request.json();
+  const { nome, telefone, email, mensagem, interesse } = dados;
 
-    
-    const { nome, telefone, email, mensagem, interesse } = dados; 
+  if (!nome || !telefone || !email || !mensagem || !interesse) {
+    return NextResponse.json({ message: "Campos obrigatórios faltando." }, { status: 400 });
+  }
 
-    
-    console.log("Novo contato recebido:", { nome, telefone, email, mensagem, interesse });
+  const conn = await getConnection();
 
-    if (!nome || !telefone || !email || !mensagem || !interesse) {
-        
-        return NextResponse.json({ message: "Campos obrigatórios faltando." }, { status: 400 });
-    }
+  try {
+    await conn.execute(
+      `INSERT INTO cliente (nome_cliente, telefone, e_mail, mensagem, interesse)
+       VALUES (:nome, :telefone, :email, :mensagem, :interesse)`,
+      { nome, telefone, email, mensagem, interesse },
+      { autoCommit: true }
+    );
 
-    try {
-        
-        await db.query(
-            "INSERT INTO contatos (nome, telefone, email, mensagem, interesse) VALUES (?, ?, ?, ?, ?)",
-            [nome, telefone, email, mensagem, interesse]
-        );
-        
-        
-        return NextResponse.json({ message: "Contato salvo com sucesso!" }, { status: 200 });
-    } catch (error) {
-        console.error("❌ Erro ao salvar no banco:", error);
-        return NextResponse.json({ message: "Erro interno do servidor ao salvar contato.", error: error }, { status: 500 });
-    }
+    return NextResponse.json({ message: "Contato salvo com sucesso!" }, { status: 200 });
+  } catch (error: any) {
+    console.error("Erro ao salvar no banco:", error);
+    return NextResponse.json({ message: "Erro ao salvar no banco.", error: error.message }, { status: 500 });
+  } finally {
+    await conn.close();
+  }
 }
