@@ -15,29 +15,21 @@ export default function AdminPanel() {
   const [orcamentos, setOrcamentos] = useState<Orcamento[]>([]);
   const [mensagemAbertaId, setMensagemAbertaId] = useState<number | null>(null);
   const [menuAtivo, setMenuAtivo] = useState<"orcamentos">("orcamentos");
+  const [menuAberto, setMenuAberto] = useState(false);
 
   useEffect(() => {
     async function fetchOrcamentos() {
-      const res = await fetch("/api/contatos", { cache: "no-store" }); // ALTERADO AQUI
+      const res = await fetch("/api/contatos", { cache: "no-store" });
       const data = await res.json();
-
-      if (Array.isArray(data)) {
-        setOrcamentos(data);
-      } else {
-        setOrcamentos([]);
-      }
+      if (Array.isArray(data)) setOrcamentos(data);
     }
     fetchOrcamentos();
   }, []);
 
   async function handleDelete(id: number) {
     if (!confirm("Tem certeza que deseja deletar este orçamento?")) return;
-
     try {
-      const res = await fetch(`/api/contatos/${id}`, {  // ALTERADO AQUI
-        method: "DELETE",
-      });
-
+      const res = await fetch(`/api/contatos/${id}`, { method: "DELETE" });
       if (res.ok) {
         setOrcamentos((prev) => prev.filter((orc) => orc.id !== id));
         if (mensagemAbertaId === id) setMensagemAbertaId(null);
@@ -51,68 +43,70 @@ export default function AdminPanel() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <nav className="w-60 bg-white shadow-md flex flex-col">
-        <div className="p-6 font-bold text-xl border-b">Painel Admin</div>
-        <button
-          onClick={() => setMenuAtivo("orcamentos")}
-          className={`text-left px-6 py-3 border-l-4 ${
-            menuAtivo === "orcamentos"
-              ? "border-blue-600 bg-blue-50 text-blue-700 font-semibold"
-              : "border-transparent hover:bg-gray-100"
-          }`}
-        >
-          Orçamentos
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
+      {/* 🔹 Cabeçalho Mobile */}
+      <div className="flex md:hidden items-center justify-between bg-zinc-900 text-white p-4">
+        <span className="font-bold text-lg">Painel Admin</span>
+        <button onClick={() => setMenuAberto(!menuAberto)} className="text-xl">
+          ☰
         </button>
-      </nav>
+      </div>
 
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-4 sm:p-6 overflow-y-auto">
         {menuAtivo === "orcamentos" && (
           <>
-            <h1 className="text-2xl font-bold mb-4">Orçamentos Recebidos</h1>
-            <div className="bg-white shadow-md rounded-xl overflow-auto">
-              <table className="min-w-full text-sm text-left">
-                <thead className="bg-gray-200 text-gray-700">
+            <h1 className="text-xl sm:text-2xl font-bold mb-4 text-center sm:text-left">
+              Orçamentos Recebidos
+            </h1>
+
+            <div className="bg-white shadow-md rounded-xl overflow-x-auto">
+              <table className="min-w-full text-sm text-left border-collapse">
+                <thead className="bg-gray-200 text-gray-700 text-xs sm:text-sm">
                   <tr>
-                    <th className="px-4 py-2">Nome</th>
-                    <th className="px-4 py-2">Telefone</th>
-                    <th className="px-4 py-2">Email</th>
-                    <th className="px-4 py-2">Data</th>
+                    <th className="px-4 py-2 whitespace-nowrap">Nome</th>
+                    <th className="px-4 py-2 whitespace-nowrap">Telefone</th>
+                    <th className="px-4 py-2 whitespace-nowrap">Email</th>
+                    <th className="px-4 py-2 whitespace-nowrap">Data</th>
                     <th className="px-4 py-2 text-center">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {orcamentos.map((orc) => (
                     <React.Fragment key={orc.id}>
-                      <tr className="border-t hover:bg-gray-50">
-                        <td className="px-4 py-2 whitespace-nowrap">{orc.nome}</td>
-                        <td className="px-4 py-2 whitespace-nowrap">{orc.telefone}</td>
-                        <td className="px-4 py-2 whitespace-nowrap">{orc.email}</td>
-                        <td className="px-4 py-2 whitespace-nowrap">
+                      <tr className="border-t hover:bg-gray-50 text-xs sm:text-sm">
+                        <td className="px-4 py-2">{orc.nome}</td>
+                        <td className="px-4 py-2">{orc.telefone}</td>
+                        <td className="px-4 py-2">{orc.email}</td>
+                        <td className="px-4 py-2">
                           {new Date(orc.criado_em).toLocaleDateString()}
                         </td>
-                        <td className="px-4 py-2 whitespace-nowrap text-center flex justify-center gap-2">
-                          <button
-                            onClick={() =>
-                              setMensagemAbertaId(mensagemAbertaId === orc.id ? null : orc.id)
-                            }
-                            className="bg-zinc-900 hover:bg-blue-700 text-white px-3 py-1 rounded-md transition"
-                          >
-                            Detalhes
-                          </button>
-                          <button
-                            onClick={() => handleDelete(orc.id)}
-                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md transition"
-                          >
-                            Excluir
-                          </button>
+                        <td className="px-4 py-2 text-center">
+                          <div className="flex flex-col sm:flex-row justify-center gap-2">
+                            <button
+                              onClick={() =>
+                                setMensagemAbertaId(
+                                  mensagemAbertaId === orc.id ? null : orc.id
+                                )
+                              }
+                              className="bg-zinc-900 hover:bg-blue-700 text-white px-3 py-1 rounded-md text-xs sm:text-sm"
+                            >
+                              Detalhes
+                            </button>
+                            <button
+                              onClick={() => handleDelete(orc.id)}
+                              className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-xs sm:text-sm"
+                            >
+                              Excluir
+                            </button>
+                          </div>
                         </td>
                       </tr>
+
                       {mensagemAbertaId === orc.id && (
                         <tr>
                           <td
                             colSpan={5}
-                            className="bg-gray-100 p-4 whitespace-pre-line text-gray-700"
+                            className="bg-gray-100 p-4 whitespace-pre-line text-gray-700 text-sm"
                           >
                             {orc.mensagem}
                           </td>
@@ -122,6 +116,7 @@ export default function AdminPanel() {
                   ))}
                 </tbody>
               </table>
+
               {orcamentos.length === 0 && (
                 <p className="p-4 text-center text-gray-500">
                   Nenhum orçamento recebido ainda.
