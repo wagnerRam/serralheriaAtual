@@ -1,22 +1,14 @@
-// /api/contato/route.ts
+import fs from "fs";
+import path from "path";
 import { NextResponse } from "next/server";
-import { getConnection } from "@/lib/db";
+
+const filePath = path.join(process.cwd(), "data.json");
 
 export async function GET() {
-  const conn = await getConnection();
-
-  try {
-    const result = await conn.execute(`
-      SELECT id_cliente, nome_cliente, telefone, e_mail, mensagem, interesse 
-      FROM cliente
-      ORDER BY id_cliente DESC
-    `);
-
-    return NextResponse.json(result.rows);
-  } catch (error: any) {
-    console.error("Erro ao buscar contatos:", error);
-    return NextResponse.json({ error: "Erro ao buscar contatos." }, { status: 500 });
-  } finally {
-    await conn.close();
+  if (!fs.existsSync(filePath)) {
+    return NextResponse.json([]);
   }
+
+  const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
+  return NextResponse.json(data);
 }

@@ -1,24 +1,23 @@
-
-// //config banco BD
-// import mysql from "mysql2/promise";
-
-// export const db = mysql.createPool({
-//   host: process.env.DB_HOST,
-//   port: Number(process.env.DB_PORT),
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DB_NAME,
-// });
-
 import oracledb from "oracledb";
+import path from "path";
 
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
 
 export async function getConnection() {
-  return await oracledb.getConnection({
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    connectString: process.env.DB_CONNECT,
-  });
-}
+  try {
+    const walletPath = path.resolve(process.env.DB_WALLET_PATH || "./wallet/Wallet_Serralheria");
 
+    const connection = await oracledb.getConnection({
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      connectString: process.env.DB_CONNECT, // agora é o descriptor completo
+      configDir: walletPath,
+      walletLocation: walletPath,
+    });
+
+    return connection;
+  } catch (error) {
+    console.error("❌ Erro ao conectar ao Oracle Autonomous Database:", error);
+    throw error;
+  }
+}

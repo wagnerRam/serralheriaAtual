@@ -1,29 +1,23 @@
+import fs from "fs";
+import path from "path";
 import { NextResponse } from "next/server";
-import { getConnection } from "@/lib/db";
+
+const filePath = path.join(process.cwd(), "data.json");
 
 export async function POST(request: Request) {
-  const dados = await request.json();
-  const { nome, telefone, email, mensagem, interesse } = dados;
+  const novo = await request.json();
 
-  if (!nome || !telefone || !email || !mensagem || !interesse) {
-    return NextResponse.json({ message: "Campos obrigatórios faltando." }, { status: 400 });
+  let lista = [];
+  if (fs.existsSync(filePath)) {
+    lista = JSON.parse(fs.readFileSync(filePath, "utf8"));
   }
 
-  const conn = await getConnection();
+  // adiciona o novo contato com um ID único
+  lista.push({ id_cliente: Date.now(), ...novo });
 
-  try {
-    await conn.execute(
-      `INSERT INTO cliente (nome_cliente, telefone, e_mail, mensagem, interesse)
-       VALUES (:nome, :telefone, :email, :mensagem, :interesse)`,
-      { nome, telefone, email, mensagem, interesse },
-      { autoCommit: true }
-    );
+  fs.writeFileSync(filePath, JSON.stringify(lista, null, 2));
 
-    return NextResponse.json({ message: "Contato salvo com sucesso!" }, { status: 200 });
-  } catch (error: any) {
-    console.error("Erro ao salvar no banco:", error);
-    return NextResponse.json({ message: "Erro ao salvar no banco.", error: error.message }, { status: 500 });
-  } finally {
-    await conn.close();
-  }
+  console.log("💾 Novo contato salvo:", novo);
+
+  return NextResponse.json({ message: "Contato salvo com sucesso!" }, { status: 200 });
 }
