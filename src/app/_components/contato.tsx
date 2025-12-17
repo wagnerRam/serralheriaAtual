@@ -39,7 +39,7 @@ function ContatoComponent() {
       console.error("Falha ao salvar o contato, mas continuando para o WhatsApp:", err);
     }
 
-    const telefoneDestino = "5511986814147";
+    const telefoneDestino = "5511954693683";
     let mensagemFormatada = `Olá! Gostaria de fazer um orçamento.
 
 *Nome:* ${nome}
