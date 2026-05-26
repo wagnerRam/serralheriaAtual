@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { FaPaperPlane } from "react-icons/fa";
-import imagemContato from "../../../public/serralheiro2.avif";
+import imagemContato from "../../../public/serralheiro2.jpg";
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
@@ -23,8 +23,139 @@ function ContatoComponent() {
     }
   }, [searchParams]);
 
+
+
+  //   const handleSubmit = async (e: React.FormEvent) => {
+  //     e.preventDefault();
+  //     setStatus("Redirecionando para o WhatsApp...");
+
+  //     try {
+  //       await fetch("/api/contato", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ nome, telefone, email, mensagem, interesse }),
+  //       });
+  //     } catch (err) {
+  //       console.error("Falha ao salvar o contato, mas continuando para o WhatsApp:", err);
+  //     }
+
+  //     const telefoneDestino = "5511954693683";
+  //     let mensagemFormatada = `Olá! Gostaria de fazer um orçamento.
+
+  // *Nome:* ${nome}
+  // *Telefone:* ${telefone}
+  // *Email:* ${email}`;
+
+  //     if (interesse) {
+  //       mensagemFormatada += `
+
+  // *Tenho interesse em:* ${interesse}`;
+  //     }
+
+  //     mensagemFormatada += `
+
+  // *Mensagem:*
+  // ${mensagem}`;
+
+  //     const url = `https://wa.me/${telefoneDestino}?text=${encodeURIComponent(
+  //       mensagemFormatada
+  //     )}`;
+
+  //     window.open(url, "_blank");
+
+  //     setNome("");
+  //     setTelefone("");
+  //     setEmail("");
+  //     setMensagem("");
+  //     setInteresse(""); // Limpa o interesse após o envio
+  //     setStatus("Abra o WhatsApp para concluir o envio!");
+  //   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    setStatus("");
+
+    // LIMPEZA DOS DADOS
+    const nomeLimpo = nome.trim();
+    const emailLimpo = email.trim();
+    const telefoneLimpo = telefone.replace(/\D/g, "");
+    const mensagemLimpa = mensagem.trim();
+
+    // VALIDAÇÃO DO NOME
+    const nomeRegex = /^[A-Za-zÀ-ÿ\s]+$/;
+
+    if (nomeLimpo.length < 3) {
+      setStatus("O nome deve ter pelo menos 3 caracteres.");
+      return;
+    }
+
+    if (!nomeRegex.test(nomeLimpo)) {
+      setStatus("Digite um nome válido.");
+      return;
+    }
+
+    // VALIDAÇÃO DO EMAIL
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(emailLimpo)) {
+      setStatus("Digite um e-mail válido.");
+      return;
+    }
+
+    // VALIDAÇÃO DO TELEFONE
+
+    // precisa ter 10 ou 11 dígitos
+    if (telefoneLimpo.length < 10 || telefoneLimpo.length > 11) {
+      setStatus("Digite um telefone válido.");
+      return;
+    }
+
+    // impede números repetidos
+    if (/^(\d)\1+$/.test(telefoneLimpo)) {
+      setStatus("Digite um telefone válido.");
+      return;
+    }
+
+    // impede sequências falsas
+    const sequenciasInvalidas = [
+      "1234567890",
+      "12345678901",
+      "0123456789",
+      "01234567890",
+    ];
+
+    if (sequenciasInvalidas.includes(telefoneLimpo)) {
+      setStatus("Digite um telefone real.");
+      return;
+    }
+
+    // valida DDD brasileiro
+    const ddd = parseInt(telefoneLimpo.substring(0, 2));
+
+    if (ddd < 11 || ddd > 99) {
+      setStatus("DDD inválido.");
+      return;
+    }
+
+    // valida celular com 9 na frente
+    if (telefoneLimpo.length === 11) {
+      const celular = telefoneLimpo.substring(2);
+
+      if (!celular.startsWith("9")) {
+        setStatus("Celular inválido.");
+        return;
+      }
+    }
+
+    // VALIDAÇÃO DA MENSAGEM
+    if (mensagemLimpa.length < 10) {
+      setStatus("A mensagem deve ter pelo menos 10 caracteres.");
+      return;
+    }
+
     setStatus("Redirecionando para o WhatsApp...");
 
     try {
@@ -33,18 +164,28 @@ function ContatoComponent() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ nome, telefone, email, mensagem, interesse }),
+        body: JSON.stringify({
+          nome: nomeLimpo,
+          telefone: telefoneLimpo,
+          email: emailLimpo,
+          mensagem: mensagemLimpa,
+          interesse,
+        }),
       });
     } catch (err) {
-      console.error("Falha ao salvar o contato, mas continuando para o WhatsApp:", err);
+      console.error(
+        "Falha ao salvar o contato, mas continuando para o WhatsApp:",
+        err
+      );
     }
 
     const telefoneDestino = "5511954693683";
+
     let mensagemFormatada = `Olá! Gostaria de fazer um orçamento.
 
-*Nome:* ${nome}
+*Nome:* ${nomeLimpo}
 *Telefone:* ${telefone}
-*Email:* ${email}`;
+*Email:* ${emailLimpo}`;
 
     if (interesse) {
       mensagemFormatada += `
@@ -55,7 +196,7 @@ function ContatoComponent() {
     mensagemFormatada += `
 
 *Mensagem:*
-${mensagem}`;
+${mensagemLimpa}`;
 
     const url = `https://wa.me/${telefoneDestino}?text=${encodeURIComponent(
       mensagemFormatada
@@ -67,17 +208,22 @@ ${mensagem}`;
     setTelefone("");
     setEmail("");
     setMensagem("");
-    setInteresse(""); // Limpa o interesse após o envio
+    setInteresse("");
+
     setStatus("Abra o WhatsApp para concluir o envio!");
   };
+
+
 
   return (
     <section className="bg-white text-gray-800 py-10 md:py-16 px-4" id="contato">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16">
         <div className="w-full lg:w-1/2">
           <Image
-            src={imagemContato}
+            src="/serralheiro2.jpg"
             alt="Trabalhador serralheiro"
+            width={600}
+            height={600}
             className="w-full h-auto object-cover rounded-md border-2 border-red-500"
             priority
           />
