@@ -179,7 +179,7 @@ function ContatoComponent() {
       );
     }
 
-    const telefoneDestino = "5511954693683";
+    const telefoneDestino = "5511989525596";
 
     let mensagemFormatada = `Olá! Gostaria de fazer um orçamento.
 
